@@ -1,0 +1,27 @@
+Syed Awase Khirni Copyright 2016-17 www.territorialprescience.com/www.sycliq.com awasekhirni@gmail.com
+Use this methods to create docker images for SYCLIQ AWS/GCP provisioning
+Playbook for creating Docker Images 
+Approach 1: 
+Commit changes made in a Docker container
+Spin up a container from a base image
+Install git package in the container
+Commit changes made in the container
+
+commands in sequence 
+pull and run the docker container from docker hub
+1. docker run -it image:tag 
+add git to the container
+2.apt-get update && apt-get install -y git
+fetch the container id
+3.docker ps -a 
+commit the changes to docker image 
+4. docker commit container_ID newname_tag/image:version 
+list all the images 
+5. docker images
+
+Approach 2:
+Write a Docker File.
+It is a text document that contains all instructions users provide to assemble an image.
+Each instruction will create a new image layer to the image 
+Instructions specify what to do when building the image.
+
