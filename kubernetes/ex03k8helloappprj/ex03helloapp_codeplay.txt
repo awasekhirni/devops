@@ -1,0 +1,71 @@
+Copyright 2018-19 Syed Awase Khirni www.territorialprescience.com
+www.sycliq.com awasekhirni@gmail.com
+
+
+creating a helloworld kubernetes application 
+
+After completing the installation in project 1
+
+step 1: kickstart minikube appliction 
+minikube start --vm-driver=hyperv --wait=false 
+
+step 2: 
+
+// fetching the cluster information 
+kubectl cluster-info 
+
+//check for the nodes using the commands 
+kubectl get nodes 
+
+step 3: deploy the hellowworld applciation 
+
+kubectl create deployment webhttp-app --image=nginx 
+
+step 4: view the deployment information 
+kubectl get deployments 
+
+step 5: view the pod 
+kubectl get pods 
+
+step 6: to fetch the events 
+kubectl get events 
+
+step 7: to  fetch replicaset(controllers)
+kubectl get rs 
+
+step 8: expose the service 
+kubectl expose deployment webhttp-app --port=80 --type=NodePort 
+
+
+kubectl get services 
+
+//adding addon services 
+minikube addons enable dashboard 
+
+
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml
+
+//fetch the list of all addons 
+minikube addons list
+
+kubectl get pods -n kubernetes-dashboard -w 
+
+//fetching all the information
+kubectl get all 
+
+
+//fetching the deployment information as an yaml file 
+
+kubectl get deploy/webhttp-app -o yaml 
+
+step 9: run the service 
+minikube service webhttp-app 
+
+step 10: delete the service 
+kubectl delete service webhttp-app
+
+step 11: delete the deployment  
+kubectl delete deployment webhttp-app
+
+

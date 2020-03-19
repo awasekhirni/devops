@@ -1,0 +1,27 @@
+Copyright 2018-19 Syed Awase Khirni www.territorialprescience.com
+www.sycliq.com awasekhirni@gmail.com
+
+//creating a single yaml file to create service and deployment in a single yaml file 
+
+
+step 1: kickstart minikube appliction 
+minikube start --vm-driver=hyperv --wait=false 
+
+step 2: 
+
+// fetching the cluster information 
+kubectl cluster-info 
+
+
+step 3: create yaml file for both deployment and services
+create an webapp.yaml 
+
+step 4: execute the yaml file 
+kubectl create -f webapp.yaml 
+kubectl create -f E:\awase-harddisk\CT\DevOps\kubernetes\codeplay\ex04k8svc_depl_yamlprj\webapp.yaml
+
+step 5: list all the deployment and services 
+kubectl get all 
+
+step 6: run the minikube 
+ minikube service webapp-all-service

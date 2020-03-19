@@ -1,0 +1,57 @@
+Copyright 2018-19 Syed Awase Khirni www.territorialprescience.com
+www.sycliq.com awasekhirni@gmail.com
+
+
+creating a helloworld kubernetes application 
+
+After completing the installation in project 1
+
+step 1: kickstart minikube application
+=> minikube start
+
+step 2: check for the nodes using the command 
+=> kubectl get nodes
+
+step 3: deploy the helloworld application 
+kubectl create deployment hello-node --image=gcr.io/hello-minikube-zero-install/hello-node
+
+//old approach
+kubectl run hwkube --image=hello-world --port=80
+
+
+//new approach
+kubectl create deployment hwkube --image=hello-world --port=80
+
+
+
+step 4: view the deployment information 
+kubectl get deployments
+
+step 5: view the pod
+kubectl get pods 
+
+step 6: to fetch the events 
+kubectl get events 
+
+step 7:to fetch replicaset (controllers)
+kubectl get rs
+
+step 8: expose the service 
+kubectl expose deployment hello-node --type=LoadBalancer --port=8080 
+
+
+step 9: run the service 
+minikube service hello-node 
+
+
+step 10: delete the service 
+kubectl delete service hello-node
+
+step 11: delete the deployment
+kubectl delete deployment hello-node 
+
+
+step 12: check the deployments 
+kubectl get deployments
+
+

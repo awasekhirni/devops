@@ -1,0 +1,52 @@
+Copyright 2018-19 Syed Awase Khirni www.territorialprescience.com
+www.sycliq.com awasekhirni@gmail.com
+
+//open the powershell in adminstrator mode 
+1. systeminfo 
+=> look for Hyper-V requirements -detected
+choco feature enable -n allowGlobalConfirmation
+Get-WindowsOptionalFeature -FeatureName Microsoft-Hyper-V-All -Online
+
+=> install kind
+choco install kind
+
+check for docker run status 
+=> docker version 
+
+=> install minikube 
+choco install minikube -y
+
+2. Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
+Get-WindowsOptionalFeature -FeatureName Microsoft-Hyper-V-All -Online
+3. run the minikube with hyperv driver 
+minikube start --vm-driver=hyperv
+
+or 
+
+minikube start --kubernetes-version="v1.17.3" --vm-driver=hyperv --hyperv-virtual-switch="SycliQMinikube"
+
+Note: in the event it is not creating minikube. turn off the hyperv services on windows 
+and run the command minikube delete 
+minikube delete 
+
+=> status: kubectl is now configured to use "minikube"
+
+3. now check the pod resources using the command 
+kubectl get pods 
+
+=> no resources found 
+
+4. check in the hypervisor windows that you should have a new virtual machine called 
+minikube 
+
+5. to stop the virtual machine 
+minikube stop 
+
+6. to start the minikube 
+minikube start 
+
+7. kubectl get nodes 
+
+
+
+
