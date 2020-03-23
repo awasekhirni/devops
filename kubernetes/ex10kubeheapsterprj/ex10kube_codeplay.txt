@@ -1,0 +1,47 @@
+Copyright 2018-19 Syed Awase Khirni www.territorialprescience.com
+www.sycliq.com awasekhirni@gmail.com
+
+
+1. create minikube 
+.\minikube-windows-amd64.exe start --vm-driver=hyperv
+
+2. enable addons for minikube 
+minikube addons list 
+minikube addons enable dashboard
+
+         ADDON NAME          | PROFILE  |    STATUS    |
+|-----------------------------|----------|--------------|
+| dashboard                   | minikube | disabled     |
+| default-storageclass        | minikube | enabled âœ…   |
+| efk                         | minikube | disabled     |
+| freshpod                    | minikube | disabled     |
+| gvisor                      | minikube | disabled     |
+| helm-tiller                 | minikube | disabled     |
+| ingress                     | minikube | disabled     |
+| ingress-dns                 | minikube | disabled     |
+| istio                       | minikube | disabled     |
+| istio-provisioner           | minikube | disabled     |
+| logviewer                   | minikube | disabled     |
+| metrics-server              | minikube | disabled     |
+| nvidia-driver-installer     | minikube | disabled     |
+| nvidia-gpu-device-plugin    | minikube | disabled     |
+| registry                    | minikube | disabled     |
+| registry-creds              | minikube | disabled     |
+| storage-provisioner         | minikube | enabled âœ…   |
+| storage-provisioner-gluster | minikube | disabled     |
+|-----------------------------|----------|------------
+
+3.kickstart application dashboard 
+minikube dashboard  
+PS C:\kubernetes> minikube ip
+172.17.196.229
+
+minikube logs 
+
+http://127.0.0.1:63635/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/overview?namespace=default
+
+4. enabling other addons  
+minikube addons enable metrics-server 
+
+5. get all the namespaces of the pods
+kubectl get pods --all-namespaces
