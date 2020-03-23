@@ -1,0 +1,85 @@
+Copyright 2018-19 Syed Awase Khirni www.territorialprescience.com
+www.sycliq.com awasekhirni@gmail.com
+
+//inplace upgrade 
+step 1: create Dockerfile with ubuntu as based image with nginx
+Dockerfile 
+
+step 2:create index.html by copying an example file from getbootstrap.com 
+index.html 
+
+step 3: create runner.sh and nginx.conf
+runner.sh 
+nginx.conf
+
+step 4: docker build 
+docker build -t web-nginx:v1 .
+docker build -t materia-nginx:v1 .
+
+docker images 
+
+step 5: verify the image by running the container 
+docker run -d -p 80:80 web-nginx:v1
+docker run -d -p 80:80 materia-nginx:v1
+
+
+step 6:// verify the images 
+docker ps -la
+//fetch the log files
+docker logs prime-nginx
+
+step 7://saving docker image 
+docker commit container_ID user_ID/tag:version 
+docker commit 600366d94144 syedawase/prime-nginx:1.0
+
+docker container list 
+//to stop the container 
+docker container stop container_ID
+
+
+//adding tag to image to push it to the hub.docker.com 
+#docker tag image_ID syedawase/prime-nginx:1.0
+docker tag 21fa32cd7b5e syedawase/prime-nginx:1.0
+
+step8://pushing the image 
+docker login --username=syedawase 
+docker push syedawase/prime-nginx:1.0
+docker push syedawase/materia-nginx:1.0
+
+
+step 9: create inplace_upgrade.yaml file 
+for deployment and service 
+inplace_upgrade.yaml
+
+step 10: kick start minikube 
+
+.\minikube-windows-amd64.exe start --vm-driver=hyperv
+
+step 11: create deployment and service using --record to record rollout history
+kubectl create -f E:\awase-harddisk\CT\DevOps\kubernetes\codeplay\ex08inplaceupgradeprj\inplace_upgrade.yaml --record 
+kubectl get deployments 
+kubectl get all 
+
+step 12: run the minikube service 
+minikube service prime-bootstrap-service
+
+//navigate to the application url in the browser 
+
+step 12: change the deployment 
+kubectl set image deployment/prime-bootstrap-deploy marhaba=syedawase/materia-nginx
+//image gets updated. 
+kubectl get deployments 
+kubectl get all
+
+kubectl get rs 
+//different guids of replicasets 
+kubectl get pods 
+
+step 13: get the rollout history
+kubectl rollout history deployment/prime-bootstrap-deploy 
+
+step14: debugging 
+kubectl describe deployment deployment/prime-bootstrap-deploy 
+
+
+

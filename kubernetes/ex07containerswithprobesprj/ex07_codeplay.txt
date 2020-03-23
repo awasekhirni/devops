@@ -1,0 +1,45 @@
+Copyright 2018-19 Syed Awase Khirni www.territorialprescience.com
+www.sycliq.com awasekhirni@gmail.com
+
+
+
+//kubernetes pod containers with probes
+
+
+step 1: kickstart minikube appliction 
+minikube start --vm-driver=hyperv 
+.\minikube-windows-amd64.exe start --vm-driver=hyperv
+
+step 2: 
+
+// fetching the cluster information 
+kubectl cluster-info 
+
+
+step 3: create yaml file for both deployment and services
+create an proberapp.yaml
+
+step 4: run the deployment app 
+kubectl create -f proberapp.yaml 
+
+step 5: check the availability of the deployments 
+kubectl get deployments 
+ kubectl get pods --show-labels
+
+//describe the pods 
+kubectl describe po/app-with-probe-745664fffb-c489b 
+//observe that the describe provides health of the pod 
+//check events type
+Normal  Started    10m   kubelet, m01       Started container marhaba
+
+
+
+step 6: deleting the deployment pod
+kubectl delete deployment marhaba
+
+
+
+
+
+
+

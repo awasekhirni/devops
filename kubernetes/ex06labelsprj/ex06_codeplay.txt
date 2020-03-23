@@ -1,0 +1,52 @@
+Copyright 2018-19 Syed Awase Khirni www.territorialprescience.com
+www.sycliq.com awasekhirni@gmail.com
+
+// labels and yaml to create pods 
+
+step 1: kickstart minikube appliction 
+minikube start --vm-driver=hyperv 
+.\minikube-windows-amd64.exe start --vm-driver=hyperv
+
+step 2: 
+
+// fetching the cluster information 
+kubectl cluster-info 
+
+
+step 3: create yaml file for both deployment and services
+create an tom_app.yaml 
+
+step 4: execute the yaml file 
+kubectl create -f tom_app.yaml 
+kubectl create -f 
+
+step 5: list all the deployment and services 
+kubectl get all 
+
+
+step 6: show the labels 
+kubectl get pods --show-labels 
+
+adding labels to a running pod after deployment 
+kubectl label pod/marhaba=ahlanwasahlan --overwrite 
+
+//tocheck the change
+kubectl get pods --show-labels 
+
+step 7: to delete a label for the pod 
+kubectl label pod/marhaba app-
+
+step 8: search the labels using a selector 
+get pods --selector env=production 
+
+get pods -l dev-lead!=sadath,env=production
+
+
+searching the pod labels by release range 
+kubectl get pods -l 'release-version in (1.0,2.0)'
+
+step 9: delete all the pods associated with a developer 
+kubectl get pods --show-labels 
+
+kubectl delete pods -l dev-lead=azeez 
+
