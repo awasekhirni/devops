@@ -1,0 +1,38 @@
+Copyright 2018-19 Syed Awase Khirni www.territorialprescience.com
+www.sycliq.com awasekhirni@gmail.com
+
+//replicasets example multiple deployment pods for your application.
+
+step 1: kickstart minikube appliction 
+minikube start --vm-driver=hyperv 
+.\minikube-windows-amd64.exe start --vm-driver=hyperv
+
+step 2: 
+
+// fetching the cluster information 
+kubectl cluster-info 
+
+
+step 3: create yaml file for both deployment and services
+create an tom_app.yaml 
+
+step 4: execute the yaml file 
+kubectl create -f tom_app.yaml 
+kubectl create -f 
+
+step 5: list all the deployment and services 
+kubectl get all 
+
+step 6: run the minikube 
+ minikube service cat-roof-service 
+
+
+Alternatively you can create application as in example 4 and use the following commands
+kubectl scale --replicas=3 deploy/appname-deployment 
+
+
+kubectl get deployments 
+
+kubectl get pods
+
+kubectl get rs 
