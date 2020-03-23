@@ -1,0 +1,36 @@
+//docker working status 
+systemctl status docker 
+//getting the info of the docker 
+//verifying that it is running 
+docker info 
+//search for containers
+docker search fedora 
+//starting the container 
+docker run fedora echo HelloWorld
+//verify operations 
+docker ps
+docker ps -all
+//get list of docker images 
+docker images 
+docker image list 
+//get list of docker containers 
+docker container list 
+//start a shell on a container 
+docker run -it fedora /bin/bash 
+//detaching the container 
+docker run -it fedora /bin/bash -d 
+//stoping docker containers 
+docker container stop container_ID container_ID
+
+//pulling the image locally
+docker pull image 
+//connecting or attaching to a container 
+docker attach centos
+
+//killing a docker container 
+docker kill centos 
+
+//run a command inside a container 
+docker exec centos cat /etc/hostname
+
+
