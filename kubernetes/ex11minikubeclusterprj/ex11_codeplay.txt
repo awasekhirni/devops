@@ -1,0 +1,61 @@
+Copyright 2018-19 Syed Awase Khirni www.territorialprescience.com
+www.sycliq.com awasekhirni@gmail.com
+
+
+
+1. create minikube 
+.\minikube-windows-amd64.exe start --vm-driver=hyperv
+
+2. create a simple busybox yaml file 
+busybox.yaml 
+
+3. create the image 
+kubectl create -f busybox.yaml 
+you can also run this script using kubernetes dashboard.
+
+
+4. get information about the pod
+kubectl get pods 
+
+5.get the information about the pod/debug information 
+kubectl describe pods busybox 
+
+REMEMBER A DEPLOYMENT IS A COLLECTION OF PODS 
+kubectl get all 
+kubectl get events 
+
+6. to search for images 
+docker search image_name 
+
+7. create another yaml file for httpd 
+ex11httpd.yaml 
+
+8. create the image pod using kubectl 
+kubectl create -f ex11httpd.yaml 
+
+9. list the pods created
+kubectl get pods -o wide 
+
+10. create ex11_nginx with namespace sycliq 
+ex11_nginx_ns.yaml 
+
+11. create namespace "sycliq" before creating the pod 
+kubectl create ns sycliq 
+
+12. now lets run the pod creator 
+kubectl create -f ex11_nginx_ns.yaml 
+
+kubectl get ns sycliq 
+kubectl get ns sycliq -o yaml 
+kubectl get ns sycliq -o json 
+
+
+
+
+
+
+
+
+
+
+
