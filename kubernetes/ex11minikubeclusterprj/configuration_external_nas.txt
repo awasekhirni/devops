@@ -1,0 +1,50 @@
+//configuration of network file server 
+external fedora based nfs with kubernetes
+
+=> login to fedora system 
+
+1. dnf install nfs-utils 
+
+2. firewall-cmd --add-service nfs --permanent 
+
+3. firewall-cmd --add-service nfs 
+
+4. exporting data in nfs environment 
+vim /etc/exports
+
+add => 
+/data *{rw,no_root_squash}   // it is insecure 
+
+cd /data 
+
+chmod 777 /data 
+
+5. systemctl start nfs-server 
+
+6. check if the mounts are available 
+showmount -e localhost 
+
+7. switch to the kubernetes machine 
+
+a. create persitence volume yaml file 
+=> ex11-nfs-pv.yaml 
+kubectl create -f ex11-nfs-pv.yaml 
+kubectl get pv
+
+b. create persistence volume claim yaml file 
+=> ex11-nfs-pvc.yaml 
+kubectl create -f ex11-nfs-pvc.yaml 
+kubectl get pvc 
+
+c. create persistence volume pod yaml file 
+=> ex11-nfs-pv-pod.yaml 
+kubectl create -f ex11-nfs-pv-pod.yaml 
+kubectl get pods 
+
+
+kubectl exec -it nfs-pv-pod -c nfs-client1 --touch /nfsshare/nfsclient1 
+
+
+
+
+
