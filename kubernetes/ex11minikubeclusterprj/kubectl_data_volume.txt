@@ -1,0 +1,134 @@
+Copyright 2018-19 Syed Awase Khirni www.territorialprescience.com
+www.sycliq.com awasekhirni@gmail.com
+
+//kubernetes data storage in persistent and non-persistent volumes 
+
+//container storage by nature is ephemeral( lasting for a short time frame)
+
+1.pod storage exists for the pod lifetime 
+  after termination of a container, the storage remains available 
+
+2. persistent volumes go beyond the life time of a pod 
+
+3. many types of storage can be provided 
+
+4. we use 2 ways to store data to the pod 
+  4a. configMap API object is used to store regular data 
+  4b. SecretAPI object can be used for encoded data 
+
+Accessing volumes 
+
+a. volumes are defined at a pod level 
+b. volumes are mounted into the container 
+c. multiple pods may access the same volume
+d. outside locking is required to prevent data corruption 
+
+
+
+Access Modes for pods 
+1. RWO(ReadWriteOnce) allows read-write access by one node 
+2. ROX(ReadOnlyMany) allows read-only by multiple nodes 
+3. RWX(ReadWriteMany) allows read-write by many nodes 
+
+
+Persistence Volume 
+
+- an independent k8s resource 
+- it is not dependent from any pod and therefore survives removal of pod 
+- persistence volume claim (PVC) is a request to use PV 
+- specific storage properties can be requested.
+
+Volume life cycle 
+- Provisioning - Persistent Volumes (PV) can be provisioned statically or dynamically 
+- binding the user requests access to a PV using a PVC 
+- using pods use claims as Volumes
+
+
+Volumes can be in different states 
+- retain - keeps the data intact 
+- delete - deletes the API object as well as the storage 
+- Recycle - removes contents fo the storage mountpoint 
+
+Configuring PV usage 
+- cluster admin creates a PV 
+- cluster user creates a PersistentVolumeClaim
+- the user creates a pod that uses the persistent volume claim as storage 
+
+
+
+how to create hostpath persistent volume 
+-> minikube ssh 
+-> mkdir /mnt/data 
+-> echo "kubernetes storage" > /mnt/data/index.html 
+
+how to create persistent volume 
+-> create example-pv.yaml 
+-> kubectl create -f example-pv.yaml 
+-> kubectl get pv example-pv.yaml 
+
+create a persistent-volume-claim 
+1. create example-pvc.yaml 
+2. kubectl create -f example-pvc.yaml 
+3. kubectl get pv pv-volume 
+4. kubectl get pvc pv-claim 
+
+
+how to create volume storage pod 
+1. create example-pv-pod.yaml 
+2. kubectl create -f pv-pod.yaml 
+3. kubectl get pod pv-pod 
+4. kubectl exec -it pv-pod -- /bin/bash 
+5. kubectl exec -it pv-pod --/bin/bash 
+
+apt-get update 
+apt-get install curl 
+curl localhost 
+
+---------------------
+creating a hostpath (physical part of setting up the storage)
+(alternatively we can use glusterfs, nfs as well)
+=> minikube ssh 
+=> mkdir /mnt/datastorage
+=> echo "hostpath_storage" > /mnt/datastorage/index.html
+
+
+1.create persistent volume yaml file 
+ex11_pv.yaml 
+
+2. kubectl create -f ex11_pv.yaml 
+
+3. get the list of the persistent volumes
+kubectl get pv 
+
+4. setting up persistent volume claim 
+create ex11_pvclaim.yaml
+
+5. create pvc 
+kubectl create -f ex11_pv_claim.yaml 
+
+6. list the persistent volume claims 
+kubectl get pv pv-volume 
+
+kubectl get pvc pv-claim 
+
+7. now lets create the pod 
+kubectl create -f ex11_pv-pod.yaml 
+kubectl get pod pv-pod 
+
+kubectl exec -it pv-pod -- /bin/bash 
+
+apt-get update 
+apt-get install curl 
+curl localhost 
+
+
+
+
+
+
+
+
+
+
+
+

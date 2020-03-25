@@ -1,0 +1,267 @@
+Copyright 2018-19 Syed Awase Khirni www.territorialprescience.com
+www.sycliq.com awasekhirni@gmail.com
+
+
+//creating deployments using kubectl examples 
+
+#start a single instance of nginx 
+kubectl run nginx --image =nginx
+
+=> start a signle instance of hazelcast and open the port 
+using EXPOSE 
+kubectl run hazelcast --image=hazelcast --port=5701
+
+=> start a single instance of hazelcast and set environment variables 
+kubectl run hazelcast --image=hazelcast --env="DNS_DOMAIN=cluster" --env="POD_NAMESPACE=default"
+
+#start a single instance of hazelcast and set labels  and environment int he container 
+
+kubectl run hazelcast --image=nginx --labels="app=hazelcast,env=prod"
+
+#start a replicated instance of nginx 
+kubectl run nginx --image=nginx --dry-run 
+
+#start a pod of busy box and keep it in the foreground, 
+kubectl run -it busybox --image=busybox --restart=Never
+
+kubectl get all 
+
+kubectl get endpoints 
+kubectl get certificatesigningrequests
+kubectl get csr 
+kubectl get clusterrolebindings 
+kubectl get clusters 
+kubectl get componentstatuses 
+kubectl get configmaps 
+kubectl get cronjobs 
+kubectl get daemonsets 
+kubectl get deployments 
+kubectl get events 
+kubectl get jobs 
+kubectl get horizontalprodautoscalers 
+kubectl get limitranges 
+kubectl get namespaces 
+kubectl get nodes 
+kubectl get podtemplates 
+kubectl get rs or replicasets 
+kubectl get replicationcontrollers 
+kubectl get roles 
+kubectl get rolebindings 
+kubectl get secrets 
+kubectl config view 
+
+command used for debugging 
+
+kubectl describe pods busybox 
+kubectl describe pods busybox -o yaml 
+kubectl desrcribe pods busybox -o json 
+
+
+//to run a command on the pod 
+kubectl exec pod_name 
+
+kubectl delete pod podname 
+kubectl delete deployment deploymentname 
+kubectl delete service service_name
+
+//getting the list of namespaces 
+//namespaces is a strict isolation that occurs on linux kernel level 
+//pods in one namespace are not visible in another namespace they are completely private 
+//every kubectl request uses namespaces to ensure that resources 
+// are strictly separated and names donot have to be unique. 
+
+=> namespace can be added when creating a pod, 
+ensuring that a pod is available in specific namespace only
+
+=> use namespaces in cluster environments with many users
+that are spread across multiple teams and projects 
+
+by default, kubernetes have 3 namespaces 
+1. default => a standard namespace 
+2. kube-public => public namespace environment.
+3. kube-system => kubernetes system parts namespace
+
+
+//getting the list of namespaces that exist 
+kubectl get ns  
+
+//create the namespace 
+kubectl create ns namespace_name 
+
+kubectl get ns ns_name -o yaml 
+kubectl get ns ns_name -o json 
+
+//replicasets 
+the pod is the most basic entity in kubernetes 
+// replicasets come next and are used to determine the 
+number of instance that are needed of a pod 
+replica sets replace  replication controllers that were used 
+in the previous version of kubernetes
+=> in the earlier version of k8s 
+
+kubectl get rc 
+
+//current versions we use 
+kubectl get rs 
+replication sets are created with deployment
+
+kubectl get rs rs_name -o yaml 
+kubectl get rs rs_name -o json 
+//to scale up the pods to 3 we can use the following command 
+kubectl scale --replicas=3 deployment deployment_name 
+
+//deployments 
+=> deployments are used to create and automate replicasets 
+=> deployments instruct the cluster how to create and scale applications 
+=> deployment controller will monitor the instance of an application
+
+kubectl get all 
+kubectl get deployments 
+
+kubectl delete deployment deployment_name 
+
+
+//labels 
+// they are arbitrary strings that adminstrators use to select/include and exlude objects 
+
+// they can be used to group objects which do not have an obvious relation by themselves 
+
+// release: stable
+release: beta
+
+environment: dev 
+environment: production
+
+
+kubectl label node Mynode disktype=hdd 
+
+kubectl get node --show-labels 
+kubectl labels pods <name> foo=bar 
+kubectl get --show-labels 
+
+
+//autoscaling deployment 
+
+kubectl autoscale deployment nginx --min=3 --max=11 --cpu-percent=65
+
+
+kube networking 
+// connecting pods to other pods across nodes (internal sometimes refered to as east-west traffic)
+//service discovery and load balancing 
+
+exposing services for external clients (external => north-south traffic)
+
+
+intra-pod communication requirements 
+
+minikube ssh 
+brctl show 
+docker ps 
+docker inspect _containerID 
+
+
+methods to access pods locally 
+=> using kubernetes proxy 
+kubernetes proxy can be used to access a kubernetes service locally without exposing it 
+=> use kubectl proxy, to access the host 
+=> start as a background process 
+
+kubectl proxy & 
+
+
+
+//single line command to run the deployment 
+kubectl run http --image=httpd 
+kubectl get pods 
+kubectl port-forward pod_name  4200:80 &
+
+
+
+//services in kubernetes 
+
+//expose  containers in a pod to the outside world, we use services 
+=> a default service is created for kubernetes
+=> custom services can be created using kubectl expose 
+=> label selectors can be used to determine which pods are added to a service 
+
+kubectl describe pod httpd  
+
+kubectl label pod httpd dept=sales 
+
+kubectl expose pod httpd --type="NodePort" --port=80
+
+//to fetch the list of services 
+kubectl get services 
+
+kubectl delete service service_name 
+
+//making services accessible through DNS (domain name service)
+//included by default 
+kubectl create -f busybox.yaml 
+kubectl get svc 
+kubectl exec -it busybox --nslookup httpd 
+
+//kube-dns pod has 3 containers to implement the DNS service 
+=> to view the dns configuration on the pod 
+kubectl exec pod_name cat /etc/resolv.conf 
+
+
+//Service types in kubernetes
+
+1. clusterIP: by default, provides internal access only exposing the service on a cluster-internal Ip address 
+
+2. NodePort: exposes a port on the kubernetes hosts 
+- each node will proxy that port into the service 
+
+
+3. loadbalancer: available in public cloud solutions. can be used in private cloud if kubernetes provides a plugin for that cloud type. 
+
+
+Ingress Services for kubernetes 
+
+=> enable services for ingress 
+minikube addons enable ingress 
+
+minikube addons list 
+kubectl get services 
+kubectl get deployments 
+kubectl create -f ex11_ingress_service.yaml 
+
+//to list ingress services 
+kubectl get ingress 
+
+kubectl get ingress  nginx-ingress -o json 
+kubectl get ingress nginx-ingress -o yaml 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
