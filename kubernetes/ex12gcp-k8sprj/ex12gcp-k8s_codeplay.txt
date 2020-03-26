@@ -1,0 +1,75 @@
+Copyright 2018-19 Syed Awase Khirni www.territorialprescience.com
+www.sycliq.com awasekhirni@gmail.com
+
+
+Install google cloud
+https://cloud.google.com/sdk/install 
+
+https://console.cloud.google.com/kubernetes/list?project=psyched-edge-272021&folder&organizationId 
+
+
+
+1.get the current version of gcloud sdk command line
+gcloud version 
+
+2.set the compute zone
+gcloud config set compute/zone europe-west2-a 
+
+gcloud components update
+
+3. create a cluster with 3 virtual machines (called nodes)
+   a. flags issue client certificate flag is necessary to avoid the complication of setting up custom certificates
+   b. --enable basic flag is necessary to avoid setting up a more robost authentication mechanism 
+   c. --num-nodes=<NUMBER> flag sets the number of virtual machine nodes that 
+   the cluster will consist of 
+
+
+gcloud container clusters create sycliq-cluster \
+    --issue-client-certificate \
+    --enable-basic-auth 
+
+4.//to create 11 nodes 
+gcloud container clusters create sycliq-cluster \
+    --issue-client-certificate \
+    --enable-basic-auth \
+    --num-nodes=11 
+
+
+
+5. //get a list of api-resources
+kubectl api-resources 
+
+6.//get the number of nodes created
+kubectl get nodes 
+kubectl get nodes -o wide 
+
+7.// get complete information about a node 
+kubectl describe nodes/gke-*
+
+
+8.//adding a label to the current node 
+kubectl patch nodes/gke-ID \
+    -p '{"metadata":{"labels":{"greeting":"hello"}}}'
+
+
+9. deleting a single node 
+kubectl delete nodes/gke-ID  
+
+10. deploying a pod 
+kubectl apply -f  filename.yaml 
+
+
+11.// to delete the cluster or dispose the cluster 
+
+gcloud container clusters delete sycliq-cluster \
+    --async --quiet 
+
+
+
+
+
+
+
+
+
+
