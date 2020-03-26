@@ -1,0 +1,97 @@
+Copyright 2018-19 Syed Awase Khirni www.territorialprescience.com
+www.sycliq.com awasekhirni@gmail.com
+
+
+1.volumes in kubernetes are an abstraction for making unix-life file system
+accessible from within a pod's container. 
+
+2. container's own file system and a vol is that most volume types transcend the container's life cycle. 
+
+3. file written to a container's file system are lost when the container crashes, exists or is restarted.
+
+4. a volume provides an abstraction that encapsulates the actual storage mechanism and its location. 
+
+5. as far as the container is concerned, a volume is just a local directory.
+
+6. a temporary file system that containers within a single pod can exchange data, such a volume type is called emptyDir 
+
+7. a volume may also be a directory within the Node's file system such as "hostpath"- which will not be reachable if the pod is scheduled to a different node. 
+
+8. a volume may also be a network storage device such as the google cloud storage volume sometimes referred as gcePersistentVolume or a NFS-server
+
+9. creating a simple kind of volume: temporary file system within a Pod which is called emptyDir. 
+
+10. emptyDir volume type is tied up to the Pod life cycle and can use tmpfs(a RAM-backed file system) for faster read/write speeds. 
+
+11. the default volume type for two or more containers in the same Pod to exchange data. 
+
+12. create emptydir_deploy.yaml
+
+13. create the pod 
+kubectl apply -f emptydir_deploy.yaml
+
+14. query the contents 
+kubectl get pod -w 
+
+kubectl exec alpine --\
+    sh -c "cat /tmp/log.txt; \
+    echo "---"; cat /data/log.txt"
+
+
+15. lets delete the pod and check if the volume exists or not 
+kubectl delete -f emptydir_deploy.yaml
+
+16. lets create it again 
+kubectl apply -f emptydir_deploy.yaml
+
+kubectl exec alpine --cat /data/log.txt 
+
+
+17. lets create hostpath demo yaml file 
+hostpath_deploy.yaml
+
+18. create deployment for yaml 
+kubectl create -f hostpath_deploy.yaml
+
+19. get deployment information and service info 
+kubectl get deployments -o wide 
+kubectl get svc -o wide 
+
+kubectl get svc_name 
+
+
+20. Kubernetes has many type of volumes, we have just seen 3 until now 
+- 2 examples here in this section (emptyDir, hostpath)
+
+21. the other popular volumes are 
+   a. gcePersistentDick - volume mounts a GoogleComputeEngine persistent disk into your pod. 
+         - the data remain intact when the pod is remove from the node. 
+    b. awsElasticBlockStore - volume mounts an AWS EBS into your pod. 
+        - the data remains intact when the pod is removed from the node. 
+    c. nfs - network file system is mounted into your pod. the data is in an nfs volume and is not erased when the pod is removed from the node. the volume is just unmounted. 
+    d.iscsi- volume allows an existing iSCSI (scsi over IP) volume to be mounted into your pod. 
+
+    e. flocker- an open-source clustered container data volume manager. it is used for managing data volumes. A flocker volume allows a flocker dataset to be mounted into a pod. if the dataset does not exist in flocker, then we first need to create it by using the FlockerAPI.
+
+    f.glusterfs - an open source network file system - allows a glusterfs volume to be mounted into your pod. 
+
+    g. rbd- Rados Block Device - an rbd volume allows a Rados Block Device volume to be mounted into your pod. Data remains preserved after the Pod is removed from the node. 
+
+    h.cephfs- a cephfs volume allows an existing Cephfs volume to be mounted into your pod. data remains intact after the pod is removed from the node. 
+
+    i. gitRepo- it mounts an empty directory and clones a git repository into it for your pod to use. 
+
+    j. secret- a secret volume to pass sensitive information to pods. 
+
+    k. persistenVolumeClaim- used to mount a PersistentVolume into a pod. PV are a way for users to "claim" durable storage such as GCE PersistentDisk or an iScsi volume without knowing the details fo the particular cloud environment. 
+
+    l. downwardAPI- a volume is used to make downward API data available to applications. it mounts a directory and write the requested data in plain text files. 
+
+    m. azureDiskVolume: it is used to mount a Microsoft Azue Data Disk into a Pod. 
+
+    n. cockroachdb: it is used to mount a cockroachdb into a pod.
+
+
+we shall see the examples scenarios in other project demos here. 
+
+

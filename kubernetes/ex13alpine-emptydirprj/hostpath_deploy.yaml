@@ -1,0 +1,38 @@
+#hostpath demo with nginx
+apiVersion: v1
+kind: Deployment 
+metadata:
+  name: nginx
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:alpine
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: hostvol
+              mountPath: /usr/share/nginx/html
+      volumes:
+        - name: hostvol
+          hostPath:
+            path:   /var/home/sycliq_home
+---
+apiVersion: v1
+kind: Service 
+metadata:
+  name: sycliq_nginx
+  labels: 
+    run: sycliq_nginx 
+spec:
+  type: NodePort
+  ports: 
+    - port: 80
+      protocol: TCP 
+  selector:
+    app: sycliq_nginx
